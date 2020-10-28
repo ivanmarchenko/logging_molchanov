@@ -1,24 +1,13 @@
-import logging
+import logging.config
+from settings import logger_config 
 
-# logger = logging.getLogger()
-# print(logger)
+logging.config.dictConfig(logger_config)
 
-logging.basicConfig() 
-app_logger = logging.getLogger('app_logger')
-
-console_handler = logging.StreamHandler()
-app_logger.addHandler(console_handler )
-
-f = logging.Formatter(fmt='%(levelname)s - %(name)s - %(message)s')
-console_handler.setFormatter(f)
-
-utils_logger = logging.getLogger('app_logger.utils')
-utils_logger.setLevel('DEBUG')
-
-
+logger = logging.getLogger('app_logger')
 
 def main():
-    utils_logger.debug('Hello')  
+    logger.debug('Enter')
+
 
 if __name__ == "__main__": 
-    main()
+    main() 
