@@ -1,3 +1,14 @@
+import logging
+
+class NewFunctionFilter(logging.Filter):
+    def filter(self, record):
+        # print(dir(record))
+        print(record.oleg_name)
+         
+        return record.funcName == 'new_fuction'
+
+
+
 logger_config = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -11,7 +22,8 @@ logger_config = {
         'console': {
             'class': 'logging.StreamHandler',
             'level': 'DEBUG',
-            'formatter': 'std_format'
+            'formatter': 'std_format', 
+            'filters': ['new_filter']
         }
     },
     'loggers': {
@@ -22,7 +34,11 @@ logger_config = {
         }
     },
     
-    # 'filters': {},
+    'filters': {
+        'new_filter': {
+            '()': NewFunctionFilter  # flters.py > import filters > filters.NewFunctionFilter
+        }
+    },
     # 'root': {} # '': {}
     # 'incremental': True,
 }

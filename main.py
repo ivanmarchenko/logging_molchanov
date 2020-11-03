@@ -5,19 +5,15 @@ logging.config.dictConfig(logger_config)
 
 logger = logging.getLogger('app_logger')
 
-words = ['new house', 'apple', 'ice cream' ]
+def new_function():
+    name = 'oleg'
+    logger.debug('Enter in to the new_function()', extra={'oleg_name': name})
 
 def main():
-    for item in words:
-        try:
-            print(item.split(' '))
-        except Exception as err:
-            # logger.debug(f 'Exception here: {err}')
-            # logger.debug(f'Exception here, item={item}', exc_info=True)
-            logger.exception(f'Exception here, item={item}')
-
-            pass 
+    logger.debug('Enter')
 
 
 if __name__ == "__main__": 
+    new_function()
     main() 
+    
