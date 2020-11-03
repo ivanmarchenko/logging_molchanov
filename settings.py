@@ -1,20 +1,21 @@
 import logging
 
-class NewFunctionFilter(logging.Filter):
-    def filter(self, record):
-        # print(dir(record))
-        print(record.oleg_name)
-         
-        return record.funcName == 'new_fuction'
+class MegaHandler(logging.Handler):
+    def __init__(self, filename):
+        logging.Handler.__init__(self)
+        self.filename = filename
 
-
+    def emit(self, record):
+        message = self.format(record)
+        with open(self.filename, 'w') as file:
+            file.write(message + '\n') 
 
 logger_config = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
         'std_format': {
-            'format': '{asctime} - {levelname} - {name} - {module}:{funcName}:{lineno} - {message}',
+            'format': '{asctime} - {levelname} - {name} - {message}',
             'style': '{'
         }
     },
@@ -23,22 +24,17 @@ logger_config = {
             'class': 'logging.StreamHandler',
             'level': 'DEBUG',
             'formatter': 'std_format', 
-            'filters': ['new_filter']
+        },
+        'file': {
+            '()': MegaHandler,
+            'level': 'DEBUG',
+            'filename': 'debug.log',
+            'formatter': 'std_format'
         }
     },
     'loggers': {
         'app_logger': {
             'level': 'DEBUG',
-            'handlers': ['console']
-            # 'propagate': False
+            'handlers': ['console', 'file']
         }
     },
-    
-    'filters': {
-        'new_filter': {
-            '()': NewFunctionFilter  # flters.py > import filters > filters.NewFunctionFilter
-        }
-    },
-    # 'root': {} # '': {}
-    # 'incremental': True,
-}
